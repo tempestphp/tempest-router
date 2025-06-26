@@ -7,7 +7,7 @@ namespace Tempest\Router\Exceptions;
 use Exception;
 use Tempest\Router\Routing\Construction\DiscoveredRoute;
 
-final class ControllerActionHasNoReturn extends Exception implements RouterException
+final class ControllerActionHadNoReturn extends Exception implements RouterException
 {
     public function __construct(DiscoveredRoute $route)
     {
