@@ -6,6 +6,6 @@ namespace Tempest\Router\Exceptions;
 
 use Exception;
 
-final class NotFoundException extends Exception implements RouterException
+final class RouteBindingFailed extends Exception implements RouterException
 {
 }

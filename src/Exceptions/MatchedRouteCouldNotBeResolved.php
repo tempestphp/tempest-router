@@ -4,7 +4,7 @@ namespace Tempest\Router\Exceptions;
 
 use Exception;
 
-final class NoMatchedRoute extends Exception
+final class MatchedRouteCouldNotBeResolved extends Exception
 {
     public function __construct()
     {

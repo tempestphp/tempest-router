@@ -6,7 +6,7 @@ use Exception;
 use Tempest\Reflection\MethodReflector;
 use Tempest\Reflection\ParameterReflector;
 
-final class InvalidEnumParameterException extends Exception
+final class EnumRouteValueWasInvalid extends Exception
 {
     public function __construct(
         private(set) readonly MethodReflector $handler,
