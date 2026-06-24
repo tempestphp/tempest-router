@@ -274,7 +274,7 @@ final class StaticGenerateCommand
                     }
 
                     if ($response->status->isRedirect()) {
-                        $target = Arr\first($response->getHeader('Location')?->values);
+                        $target = Arr\first($response->getHeader('Location')->values);
                     }
                 } while ($response?->status->isRedirect());
 
