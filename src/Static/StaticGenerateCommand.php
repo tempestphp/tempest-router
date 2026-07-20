@@ -32,6 +32,7 @@ use Tempest\Support\Arr;
 use Tempest\Support\Filesystem;
 use Tempest\Support\Regex;
 use Tempest\Support\Str;
+use Tempest\Support\Uri;
 use Tempest\View\Exceptions\ViewCompilationFailed;
 use Tempest\View\View;
 use Tempest\View\ViewRenderer;
@@ -124,7 +125,7 @@ final class StaticGenerateCommand
                     $params = [$params];
                 }
 
-                $uri = parse_url(uri($staticPage->handler, ...$params), PHP_URL_PATH);
+                $uri = Uri\get_path(uri($staticPage->handler, ...$params));
 
                 $fileName = $uri === '/'
                     ? 'index.html'
