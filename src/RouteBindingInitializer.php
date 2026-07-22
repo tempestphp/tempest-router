@@ -7,6 +7,7 @@ namespace Tempest\Router;
 use Tempest\Container\Container;
 use Tempest\Container\DynamicInitializer;
 use Tempest\Reflection\ClassReflector;
+use Tempest\Router\Exceptions\RouteBindingDidNotSupportRelations;
 use Tempest\Router\Exceptions\RouteBindingFailed;
 use UnitEnum;
 
@@ -37,7 +38,22 @@ final class RouteBindingInitializer implements DynamicInitializer
             throw new RouteBindingFailed();
         }
 
-        $object = $class->callStatic('resolve', $matchedRoute->params[$parameter->getName()]);
+        $withRelations = $parameter->getAttribute(WithRelations::class);
+
+        if ($withRelations !== null) {
+            $resolve = $class->getMethod('resolve');
+
+            if ($resolve->getParameter('relations') === null && ! $resolve->getReflection()->isVariadic()) {
+                throw new RouteBindingDidNotSupportRelations($class->getName());
+            }
+        }
+
+        $input = $matchedRoute->params[$parameter->getName()];
+
+        $object = match ($withRelations) {
+            null => $class->callStatic('resolve', $input),
+            default => $class->callStatic('resolve', $input, relations: $withRelations->relations),
+        };
 
         if ($object === null) {
             throw new RouteBindingFailed();
